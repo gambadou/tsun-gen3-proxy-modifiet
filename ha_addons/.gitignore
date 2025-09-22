@@ -1,26 +1,5 @@
 # Fichiers générés par Home Assistant Add-on
 .data.json
-apparmor.txt
-
-# Documentation locale (tu peux enlever si tu veux garder le README hors GitHub)
-# README.md
-
-# Fichiers Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Fichiers de logs
-*.log
-
-# Environnements virtuels
-venv/
-.env/
-.venv/
-
-# Fichiers temporaires d’éditeurs
-*.swp
-*.swo
-*.bak
-*.tmp
+config.yaml 
+apparmor.txt 
+README.md
