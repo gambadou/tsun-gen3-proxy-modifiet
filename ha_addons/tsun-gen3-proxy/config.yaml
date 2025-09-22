@@ -1,21 +1,11 @@
 name: "Tsun Gen3 Proxy"
 version: "1.0.0"
 slug: "tsun_gen3_proxy"
-description: "Proxy pour récupérer les données des onduleurs Tsun Gen3"
+description: "Addon Home Assistant pour le proxy Tsun Gen3"
 arch:
-  - amd64
-  - armv7
-  - armhf
   - aarch64
+  - amd64
 startup: services
 boot: auto
-init: false
-options:
-  log_level: info
-schema:
-  log_level: list(info|debug|warning|error)?
-ports:
-  5000/tcp: 5000
-map:
-  - config:rw
-image: "local/tsun-gen3-proxy-{arch}"
+options: {}
+schema: {}
