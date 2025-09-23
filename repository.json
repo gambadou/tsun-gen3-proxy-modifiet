@@ -2,7 +2,7 @@
   "name": "TSUN Gen3 Proxy",
   "version": "1.0.0",
   "slug": "tsun_gen3_proxy",
-  "description": "Proxy pour les onduleurs TSUN GEN3 / GEN3 PLUS vers MQTT (intégration Home Assistant).",
+  "description": "Proxy pour onduleurs TSUN GEN3 vers MQTT",
   "arch": ["aarch64", "amd64", "armv7"],
   "startup": "services",
   "boot": "auto",
