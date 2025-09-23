@@ -1,19 +1,22 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:15.0.3
-FROM $BUILD_FROM
+FROM ghcr.io/home-assistant/aarch64-base:latest
 
+# Installer python3, pip et venv
+RUN apk add --no-cache python3 py3-pip python3-venv
+
+# Définir le répertoire de travail
 WORKDIR /app
 
-# Installer Python et pip (obligatoire sur Alpine)
-RUN apk add --no-cache python3 py3-pip
+# Copier requirements et ton code
+COPY requirements.txt /app/
+COPY . /app/
 
-# Copier requirements.txt
-COPY ../../requirements.txt /app/
+# Créer un virtualenv et installer les dépendances dedans
+RUN python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install --upgrade pip \
+    && /opt/venv/bin/pip install --no-cache-dir -r /app/requirements.txt
 
-# Installer les dépendances Python
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# Ajouter le venv au PATH pour que python/pip pointent dessus
+ENV PATH="/opt/venv/bin:$PATH"
 
-# Copier le script de lancement
-COPY run.sh /run.sh
-RUN chmod a+x /run.sh
-
-CMD [ "/run.sh" ]
+# Commande de lancement
+CMD ["python3", "/app/run.py"]
