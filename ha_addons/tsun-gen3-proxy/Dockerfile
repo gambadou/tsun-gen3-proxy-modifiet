@@ -5,16 +5,16 @@ RUN apk add --no-cache python3 py3-pip bash
 
 WORKDIR /app
 
-# Copier requirements et code
+# Copier le code Python et requirements
 COPY requirements.txt /app/
 COPY run.py /app/
 
-# Installer dépendances Python (forcé pour PEP 668)
+# Installer les dépendances Python (forcer PEP 668)
 RUN pip install --no-cache-dir --break-system-packages -r /app/requirements.txt
 
-# Copier le script de démarrage et le rendre exécutable
+# Copier script de démarrage et rendre exécutable
 COPY run.sh /run.sh
 RUN chmod a+x /run.sh
 
-# Lancement via s6-overlay
+# Le script sera lancé par s6-overlay (Supervisor)
 CMD [ "/run.sh" ]
