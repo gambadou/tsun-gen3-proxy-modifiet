@@ -1,22 +1,32 @@
-import os
+import argparse
 import logging
+import paho.mqtt.client as mqtt
 
-MQTT_HOST = os.getenv("MQTT_HOST", "localhost")
-MQTT_PORT = int(os.getenv("MQTT_PORT", "1883"))
-MQTT_USER = os.getenv("MQTT_USER", "")
-MQTT_PASS = os.getenv("MQTT_PASS", "")
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+# Parser les arguments passés par run.sh
+parser = argparse.ArgumentParser()
+parser.add_argument("--mqtt-host", required=True)
+parser.add_argument("--mqtt-port", type=int, required=True)
+parser.add_argument("--mqtt-user", required=True)
+parser.add_argument("--mqtt-password", required=True)
+parser.add_argument("--log-level", default="info")
+args = parser.parse_args()
 
+# Configurer le logging
 logging.basicConfig(
-    level=getattr(logging, LOG_LEVEL, logging.INFO),
+    level=getattr(logging, args.log_level.upper(), logging.INFO),
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 logger = logging.getLogger("tsun-proxy")
 
-def main():
-    logger.info("Démarrage du TSUN Gen3 Proxy")
-    logger.info(f"MQTT → {MQTT_HOST}:{MQTT_PORT} (user={MQTT_USER})")
-    # 👉 Ici tu branches ton code proxy/TSUN
+# Connexion MQTT
+client = mqtt.Client()
+client.username_pw_set(args.mqtt_user, args.mqtt_password)
+client.connect(args.mqtt_host, args.mqtt_port, 60)
 
-if __name__ == "__main__":
-    main()
+logger.info(f"Connecté à MQTT {args.mqtt_host}:{args.mqtt_port}")
+
+# Boucle principale
+try:
+    client.loop_forever()
+except KeyboardInterrupt:
+    logger.info("Arrêt du TSUN Gen3 Proxy")
