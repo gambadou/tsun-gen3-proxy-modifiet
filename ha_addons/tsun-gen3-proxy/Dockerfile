@@ -1,20 +1,19 @@
-FROM ghcr.io/home-assistant/aarch64-base:latest
+# Utiliser l'image officielle Home Assistant Add-on
+ARG BUILD_FROM=ghcr.io/hassio-addons/base-python:15.0.3
+FROM $BUILD_FROM
 
-# Installer Python et pip
-RUN apk add --no-cache python3 py3-pip bash
-
+# Répertoire de travail
 WORKDIR /app
 
-# Copier le code Python et requirements
-COPY requirements.txt /app/
-COPY run.py /app/
+# Copier le code et les dépendances
+COPY ../../requirements.txt /app/
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Installer les dépendances Python (forcer PEP 668)
-RUN pip install --no-cache-dir --break-system-packages -r /app/requirements.txt
+COPY ../../app /app/app
+COPY ../../src /app/src
 
-# Copier script de démarrage et rendre exécutable
+# Script de démarrage
 COPY run.sh /run.sh
 RUN chmod a+x /run.sh
 
-# Le script sera lancé par s6-overlay (Supervisor)
 CMD [ "/run.sh" ]

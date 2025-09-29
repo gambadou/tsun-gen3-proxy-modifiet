@@ -1,11 +1,13 @@
-name: "Tsun Gen3 Proxy"
+name: "TSUN Gen3 Proxy"
 version: "1.0.0"
 slug: "tsun_gen3_proxy"
-description: "Addon Home Assistant pour le proxy Tsun Gen3"
+description: "Proxy pour l'onduleur TSUN Gen3 afin de l'intégrer à Home Assistant"
 arch:
   - aarch64
   - amd64
-startup: services
+startup: application
 boot: auto
+ports:
+  5000/tcp: 5000
 options: {}
 schema: {}
