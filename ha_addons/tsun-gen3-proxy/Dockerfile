@@ -1,21 +1,22 @@
-# Image de base avec Python 3.11 et pip déjà inclus
+# Image de base Home Assistant avec Python 3.11 + pip
 ARG BUILD_FROM=ghcr.io/home-assistant/aarch64-base-python:3.11
 FROM $BUILD_FROM
 
-# Répertoire de travail
+# Définir le dossier de travail
 WORKDIR /app
 
-# Copier et installer les dépendances Python
+# Copier les dépendances
 COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Copier ton code source
-COPY app /app/app
+# Installer les dépendances Python
+RUN pip3 install --no-cache-dir -r /app/requirements.txt
+
+# Copier ton code source et le script de démarrage
 COPY src /app/src
-
-# Copier le script de démarrage
 COPY run.sh /run.sh
+
+# Donner les droits d’exécution
 RUN chmod a+x /run.sh
 
-# Commande de démarrage du conteneur
+# Commande de lancement de l’add-on
 CMD [ "/run.sh" ]
