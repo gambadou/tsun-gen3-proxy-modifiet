@@ -1,4 +1,4 @@
-# Image de base avec Python 3.11 et pip déjà installé
+# Image de base avec Python 3.11 et pip déjà inclus
 ARG BUILD_FROM=ghcr.io/home-assistant/aarch64-base-python:3.11
 FROM $BUILD_FROM
 
@@ -9,7 +9,7 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Copier le code source
+# Copier ton code source
 COPY app /app/app
 COPY src /app/src
 
@@ -17,5 +17,5 @@ COPY src /app/src
 COPY run.sh /run.sh
 RUN chmod a+x /run.sh
 
-# Démarrage du conteneur
+# Commande de démarrage du conteneur
 CMD [ "/run.sh" ]
