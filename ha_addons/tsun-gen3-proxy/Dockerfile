@@ -1,4 +1,3 @@
-```dockerfile
 # Image de base avec Python 3.11 et pip déjà installé
 ARG BUILD_FROM=ghcr.io/home-assistant/aarch64-base-python:3.11
 FROM $BUILD_FROM
@@ -20,4 +19,3 @@ RUN chmod a+x /run.sh
 
 # Démarrage du conteneur
 CMD [ "/run.sh" ]
-```
