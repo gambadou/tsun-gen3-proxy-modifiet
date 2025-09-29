@@ -1,3 +1,0 @@
-[run]
-branch = True
-omit = app/src/web/templates/*.html.j2
