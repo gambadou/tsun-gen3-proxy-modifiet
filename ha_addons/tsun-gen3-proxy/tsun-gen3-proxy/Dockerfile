@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:15.0.3
+ARG BUILD_FROM=ghcr.io/home-assistant/base-python:3.11
 FROM $BUILD_FROM
 
 WORKDIR /app
